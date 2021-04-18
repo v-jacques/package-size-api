@@ -9,12 +9,14 @@ type ProductType =
     | Cards = 3
     | Mug = 4
 
-type [<CLIMutable>] OrderItem =
+[<CLIMutable>]
+type OrderItem =
     { OrderItemID: int
       ProductType: ProductType
       Quantity: int }
 
-type [<CLIMutable>] Order =
+[<CLIMutable>]
+type Order =
     { OrderID: int
       OrderItems: OrderItem seq }
     /// Minimum bin width required for the order in millimeters (mm).
