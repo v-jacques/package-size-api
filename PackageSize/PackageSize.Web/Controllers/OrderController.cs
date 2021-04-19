@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PackageSize.Domain;
 using PackageSize.Web.Models;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PackageSize.Web.Controllers
@@ -19,27 +21,39 @@ namespace PackageSize.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+            // A customer can order 1 or multiple items.
+            if (order.OrderItems.Count() == 0)
+            {
+                return BadRequest();
+            }
 
-            return CreatedAtAction(nameof(GetOrder), new { orderID = order.OrderID }, order);
+            try
+            {
+                _context.Add(order);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetOrder), new { orderID = order.OrderID }, order);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("{orderID}")]
         public async Task<ActionResult<Order>> GetOrder(int orderID)
         {
-            var order = await _context.Orders.FindAsync(orderID);
+            var order = await _context.FindAsync<Order>(orderID);
 
             if (order == null)
             {
                 return NotFound();
             }
-            else
-            {
-                await _context.Entry(order).Collection(o => o.OrderItems).LoadAsync();
+            
+            // Get Order.OrderItems
+            await _context.Entry(order).Collection(o => o.OrderItems).LoadAsync();
 
-                return order;
-            }
+            return order;
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PackageSize.Domain;
+using System;
 
 namespace PackageSize.Web.Models
 {
     public class OrderContext : DbContext
     {
-        public DbSet<Order> Orders { get; set; }
-
         public OrderContext(DbContextOptions<OrderContext> options) : base(options)
         {
 
@@ -20,17 +19,11 @@ namespace PackageSize.Web.Models
                 .Property(oi => oi.OrderItemID)
                 .ValueGeneratedOnAdd();
 
-            //modelBuilder
-            //    .Entity<OrderItem>()
-            //    .Property(oi => oi.ProductType)
-            //    .HasConversion(
-            //        v => v.ToString(),
-            //        v => (ProductType)Enum.Parse(typeof(ProductType), v));
-
-            //modelBuilder
-            //    .Entity<Order>()
-            //    .HasMany<OrderItem>(o => o.OrderItems)
-            //    .WithOne();
+            // Relationship between Order and OrderItem
+            modelBuilder
+                .Entity<Order>()
+                .HasMany<OrderItem>(o => o.OrderItems)
+                .WithOne();
         }
     }
 }
