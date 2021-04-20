@@ -13,7 +13,7 @@
 `dotnet run -p PackageSize.Web`
 
 ### Testing APIs with Swagger
-1. Open your prefered browser.
+1. Open your preferred browser.
 2. Navigate to [http://localhost:5000/swagger](http://localhost:5000/swagger).
 
 ### Testing APIs with Postman/Insomnia
