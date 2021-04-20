@@ -54,7 +54,6 @@ namespace PackageSize.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Package Size API V1");
             });
 
-            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
