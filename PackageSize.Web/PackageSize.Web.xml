@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PackageSize.Web</name>
+    </assembly>
+    <members>
+        <member name="M:PackageSize.Web.Controllers.OrderController.PostOrder(PackageSize.Domain.Order)">
+            <summary>
+            Posts an Order.
+            </summary>
+            /// <remarks>
+            Sample request:
+            
+                POST api/Order
+                {
+                    "orderID": 1,
+                	"orderItems": [
+            	        {
+            		        "productType": "PhotoBook",
+            		        "quantity": 2
+                        },
+            	        {
+            		        "productType": "Calendar",
+            		        "quantity": 1
+            	        },
+            	        {
+                            "productType": "Canvas",
+            		        "quantity": 3
+                        },
+            	        {
+                            "productType": "Cards",
+            		        "quantity": 10
+                        },
+            	        {
+                            "productType": "Mug",
+            		        "quantity": 3
+                        }
+                    ]
+                }
+            </remarks>
+            <param name="order"></param>
+        </member>
+        <member name="M:PackageSize.Web.Controllers.OrderController.GetOrder(System.Int32)">
+            <summary>
+            Gets an Order.
+            </summary>
+            <param name="orderID"></param>
+        </member>
+    </members>
+</doc>
