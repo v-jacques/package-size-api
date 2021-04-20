@@ -18,7 +18,43 @@ namespace PackageSize.Web.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Posts an Order.
+        /// </summary>
+        /// /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Order
+        ///     {
+        ///	        "orderID": 1,
+        ///     	"orderItems": [
+        ///		        {
+        ///			        "productType": "PhotoBook",
+        ///			        "quantity": 2
+        ///             },
+        ///		        {
+        ///			        "productType": "Calendar",
+        ///			        "quantity": 1
+        ///		        },
+        ///		        {
+        ///                 "productType": "Canvas",
+        ///			        "quantity": 3
+        ///             },
+        ///		        {
+        ///                 "productType": "Cards",
+        ///			        "quantity": 10
+        ///             },
+        ///		        {
+        ///                 "productType": "Mug",
+        ///			        "quantity": 3
+        ///             }
+        ///	        ]
+        ///     }
+        /// </remarks>
+        /// <param name="order"></param>
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             // A customer can order 1 or multiple items.
@@ -40,7 +76,13 @@ namespace PackageSize.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets an Order.
+        /// </summary>
+        /// <param name="orderID"></param>
         [HttpGet("{orderID}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<Order>> GetOrder(int orderID)
         {
             var order = await _context.FindAsync<Order>(orderID);
@@ -49,7 +91,7 @@ namespace PackageSize.Web.Controllers
             {
                 return NotFound();
             }
-            
+
             // Get Order.OrderItems
             await _context.Entry(order).Collection(o => o.OrderItems).LoadAsync();
 
